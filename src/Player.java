@@ -1,5 +1,5 @@
 abstract class Player {
-    protected String playerName;
+    private String playerName;
     protected CardsList hand;
     public Player(CardsList cardsList, String name) {
         hand = cardsList;
@@ -17,13 +17,47 @@ abstract class Player {
     public void cardsPrinting() {
         System.out.print(playerName + " ");
         hand.print();
-        System.out.println();
     }
 
     public int cardsLength() {
         return hand.size();
     }
 
-    public abstract void processing(Table table);
+    public abstract boolean processing(Table table, Player oppositePlayer, int trumpId);
 
+    public Card getMinCard(int trumpSuitId) {
+        Card minCard = null;
+        for (Card card: hand)
+            if (card.getSuitId() == trumpSuitId){
+                if (minCard == null)
+                    minCard = card;
+                else if (card.getNameId() < minCard.getNameId())
+                    minCard = card;
+            }
+        return minCard;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    protected boolean makeMove(Table table, Player opponentPlayer, int cardNum, int trumpId) {
+        CardsList thisTableCards = table.getPlayerCards(this);
+        CardsList opponentTableCards = table.getPlayerCards(opponentPlayer);
+        int thisTableCardsLength = thisTableCards.size();
+        int opponentTableCardsLength = opponentTableCards.size();
+        Card thisCard = hand.get(cardNum);
+        Card opponentCard = opponentTableCardsLength == 0 ? null: opponentTableCards.get(opponentTableCards.size() - 1);
+        int deltaLength = opponentTableCardsLength - thisTableCardsLength;
+        switch (deltaLength) {
+            case 0: table.addCard(this, hand.remove(cardNum));
+                    return true;
+            case 1: if (Card.canBeat(thisCard, opponentCard, trumpId)) {
+                        table.addCard(this, hand.remove(cardNum));
+                        return true;
+                    } else
+                        return false;
+            default: return false;
+        }
+    }
 }

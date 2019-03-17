@@ -6,7 +6,18 @@ class Game {
 
     private static int trumpSuitId;
 
-    private static Player turn = null;
+    private static Player turnPlayer = null;
+
+    private static Player firstTurnPlayer(Card mainCard, Card aiCard) {
+        if (mainCard == null && aiCard == null)
+            return mainPlayer;
+        else if (mainCard == null)
+            return aiPlayer;
+        else if (aiCard == null)
+            return mainPlayer;
+        else
+            return mainCard.getNameId() < aiCard.getNameId()? mainPlayer : aiPlayer;
+    }
 
     private static void mainPlayerInit() {
         String mainPlayerName = "Main Player";
@@ -32,7 +43,17 @@ class Game {
     }
 
     private static void trumpInit() {
-        trumpSuitId = deck.getCardsList().get(23).getId() / 10;
+        Card trumpCard = deck.getCardsList().get(23);
+        trumpSuitId = trumpCard.getSuitId();
+        String trumpSuit = trumpCard.decode().get("suit");
+        System.out.println("Козырь - " + trumpSuit);
+    }
+
+    private static void turnInit() {
+        Card mainCard = mainPlayer.getMinCard(trumpSuitId);
+        Card aiCard = aiPlayer.getMinCard(trumpSuitId);
+        turnPlayer = firstTurnPlayer(mainCard, aiCard);
+        System.out.println("Первым ходит " + turnPlayer.getPlayerName());
     }
 
     private static void init() {
@@ -41,16 +62,35 @@ class Game {
         aiPlayerInit(); // Инициализация аи
         trumpInit(); // Инициализация козыря
         tableInit(); // Инициализация стола
+        turnInit();
+    }
 
+    private static void printing() {
+        System.out.println("--------------Деки---------------");
+        mainPlayer.cardsPrinting();
+        aiPlayer.cardsPrinting();
+        System.out.println("--------------Стол---------------");
+        table.tablePrinting();
+        System.out.println("---------------------------------");
     }
 
     public static void main(String[] args) {
         init();
-        mainPlayer.processing(table);
-        mainPlayer.cardsPrinting();
-        table.tablePrinting();
         while (true) {
-            return;
+            Player secondPlayer = turnPlayer == mainPlayer ? aiPlayer : mainPlayer;
+
+            while (true)
+                if (turnPlayer.processing(table, secondPlayer, trumpSuitId))
+                    break;
+
+            turnPlayer = secondPlayer;
+
+            printing();
+
+            if (turnPlayer.cardsLength() == 0){
+                System.out.println("Победитель - " + turnPlayer.getPlayerName());
+                break;
+            }
         }
     }
 }

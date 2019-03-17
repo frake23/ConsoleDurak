@@ -15,8 +15,12 @@ class Table {
 
     public void tablePrinting() {
         for (Player p: cardsOnTable.keySet()) {
-            System.out.print(p.playerName + " ");
+            System.out.print(p.getPlayerName() + " ");
             cardsOnTable.get(p).print();
         }
+    }
+
+    public CardsList getPlayerCards(Player player) {
+        return cardsOnTable.get(player);
     }
 }

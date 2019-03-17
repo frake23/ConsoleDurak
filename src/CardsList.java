@@ -6,8 +6,9 @@ class CardsList extends ArrayList<Card> {
     }
     public void print() {
         this.forEach(card -> {
-            String cardString = card.cardString();
+            String cardString = card.toString();
             System.out.print(cardString + " ");
         });
+        System.out.println();
     }
 }

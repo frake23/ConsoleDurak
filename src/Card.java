@@ -8,19 +8,33 @@ class Card {
     }
 
     public HashMap<String, String> decode() {
-        HashMap<String, String> cardDecode = new HashMap<String, String>();
-        int cardNameId = id / 10;
-        int cardSuitId = id % 10;
+        HashMap<String, String> cardDecode = new HashMap<>();
+        int cardNameId = getNameId();
+        int cardSuitId = getSuitId();
         cardDecode.put("name", idToCardName(cardNameId));
         cardDecode.put("suit", idToCardSuit(cardSuitId));
         return cardDecode;
     }
 
-    public String cardString() {
+    @Override
+    public String toString() {
         int cardNameId = id / 10;
         int cardSuitId = id % 10;
         return String.format("|%s %s|", idToCardName(cardNameId), idToCardSuit(cardSuitId));
     }
+
+    public int getNameId() {
+        return id / 10;
+    }
+
+    public int getSuitId() {
+        return id % 10;
+    }
+
+    public int getId() {
+        return id;
+    }
+
 
     private String idToCardName(int id) {
         switch (id) {
@@ -60,7 +74,15 @@ class Card {
         return null;
     }
 
-    public int getId() {
-        return id;
+    public static boolean canBeat(Card card1, Card card2, int trumpId) {
+        if (card1.getSuitId() == trumpId) {
+            if (card2.getSuitId() == trumpId)
+                return card1.getId() > card2.getId();
+            else
+                return true;
+        } else if (card1.getSuitId() == card2.getSuitId())
+                return card1.getId() > card2.getId();
+        else
+            return false;
     }
 }
