@@ -81,13 +81,13 @@ public class Card {
     }
 
     public boolean canBeat(Card card, int trumpId) {
-        if (getSuitId() == trumpId) {
-            if (getSuitId() == trumpId)
-                return getId() > card.getId();
+        if (suitId == trumpId) {
+            if (card.getSuitId() == trumpId)
+                return id > card.getId();
             else
                 return true;
-        } else if (getSuitId() == card.getSuitId())
-                return getId() > card.getId();
+        } else if (suitId == card.getSuitId())
+                return id > card.getId();
         else
             return false;
     }

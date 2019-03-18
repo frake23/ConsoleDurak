@@ -6,8 +6,8 @@ import main.java.models.Table.Table;
 
 public abstract class Player {
     private String playerName;
-    CardsList hand;
-    Player(CardsList cardsList, String name) {
+    protected CardsList hand;
+    protected Player(CardsList cardsList, String name) {
         hand = cardsList;
         playerName = name;
     }
@@ -47,7 +47,7 @@ public abstract class Player {
         return playerName;
     }
 
-    boolean makeMove(Table table, Player opponentPlayer, int cardNum, int trumpId) {
+    protected boolean makeMove(Table table, Player opponentPlayer, int cardNum, int trumpId) {
         CardsList thisTableCards = table.getPlayerCards(this);
         CardsList opponentTableCards = table.getPlayerCards(opponentPlayer);
         int thisTableCardsLength = thisTableCards.size();

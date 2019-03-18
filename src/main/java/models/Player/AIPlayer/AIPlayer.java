@@ -1,7 +1,8 @@
-package main.java.models.Player;
+package main.java.models.Player.AIPlayer;
 
 import main.java.models.CardsList.CardsList;
 import main.java.models.Card.Card;
+import main.java.models.Player.Player;
 import main.java.models.Table.Table;
 
 public class AIPlayer extends Player {

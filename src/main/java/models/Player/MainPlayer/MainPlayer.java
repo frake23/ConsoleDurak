@@ -1,5 +1,6 @@
-package main.java.models.Player;
+package main.java.models.Player.MainPlayer;
 import main.java.models.CardsList.CardsList;
+import main.java.models.Player.Player;
 import main.java.models.Table.Table;
 
 import java.util.Scanner;

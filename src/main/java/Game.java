@@ -2,6 +2,8 @@ package main.java;
 
 import main.java.models.Player.*;
 import main.java.models.Card.*;
+import main.java.models.Player.AIPlayer.AIPlayer;
+import main.java.models.Player.MainPlayer.MainPlayer;
 import main.java.models.Table.*;
 import main.java.models.Deck.Deck;
 import main.java.models.CardsList.CardsList;
@@ -70,7 +72,7 @@ class Game {
         aiPlayerInit(); // Инициализация аи
         trumpInit(); // Инициализация козыря
         tableInit(); // Инициализация стола
-        turnInit();
+        turnInit(); // Инициализация первого хода
     }
 
     private static void printing() {
