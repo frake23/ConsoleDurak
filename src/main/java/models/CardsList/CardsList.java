@@ -1,7 +1,11 @@
+package main.java.models.CardsList;
+
+import main.java.models.Card.Card;
+
 import java.util.ArrayList;
 
-class CardsList extends ArrayList<Card> {
-    CardsList() {
+public class CardsList extends ArrayList<Card> {
+    public CardsList() {
         super();
     }
     public void print() {

@@ -1,7 +1,13 @@
-abstract class Player {
+package main.java.models.Player;
+
+import main.java.models.Card.Card;
+import main.java.models.CardsList.CardsList;
+import main.java.models.Table.Table;
+
+public abstract class Player {
     private String playerName;
-    protected CardsList hand;
-    public Player(CardsList cardsList, String name) {
+    CardsList hand;
+    Player(CardsList cardsList, String name) {
         hand = cardsList;
         playerName = name;
     }
@@ -41,7 +47,7 @@ abstract class Player {
         return playerName;
     }
 
-    protected boolean makeMove(Table table, Player opponentPlayer, int cardNum, int trumpId) {
+    boolean makeMove(Table table, Player opponentPlayer, int cardNum, int trumpId) {
         CardsList thisTableCards = table.getPlayerCards(this);
         CardsList opponentTableCards = table.getPlayerCards(opponentPlayer);
         int thisTableCardsLength = thisTableCards.size();
@@ -52,7 +58,7 @@ abstract class Player {
         switch (deltaLength) {
             case 0: table.addCard(this, hand.remove(cardNum));
                     return true;
-            case 1: if (Card.canBeat(thisCard, opponentCard, trumpId)) {
+            case 1: if (thisCard.canBeat(opponentCard, trumpId)) {
                         table.addCard(this, hand.remove(cardNum));
                         return true;
                     } else

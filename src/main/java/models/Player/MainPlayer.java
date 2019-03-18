@@ -1,9 +1,13 @@
+package main.java.models.Player;
+import main.java.models.CardsList.CardsList;
+import main.java.models.Table.Table;
+
 import java.util.Scanner;
 
-class MainPlayer extends Player {
+public class MainPlayer extends Player {
     private Scanner scan;
 
-    MainPlayer(CardsList cardsList, String name) {
+    public MainPlayer(CardsList cardsList, String name) {
         super(cardsList, name);
         scan = new Scanner(System.in);
     }

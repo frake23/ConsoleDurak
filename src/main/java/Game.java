@@ -1,3 +1,11 @@
+package main.java;
+
+import main.java.models.Player.*;
+import main.java.models.Card.*;
+import main.java.models.Table.*;
+import main.java.models.Deck.Deck;
+import main.java.models.CardsList.CardsList;
+
 class Game {
     private static Player mainPlayer;
     private static Player aiPlayer;

@@ -1,10 +1,16 @@
+package main.java.models.Card;
+
 import java.util.HashMap;
 
-class Card {
+public class Card {
     private int id;
+    private int nameId;
+    private int suitId;
 
     public Card(int id) {
         this.id = id;
+        nameId = id / 10;
+        suitId = id % 10;
     }
 
     public HashMap<String, String> decode() {
@@ -24,14 +30,14 @@ class Card {
     }
 
     public int getNameId() {
-        return id / 10;
+        return nameId;
     }
 
     public int getSuitId() {
-        return id % 10;
+        return suitId;
     }
 
-    public int getId() {
+    private int getId() {
         return id;
     }
 
@@ -74,14 +80,14 @@ class Card {
         return null;
     }
 
-    public static boolean canBeat(Card card1, Card card2, int trumpId) {
-        if (card1.getSuitId() == trumpId) {
-            if (card2.getSuitId() == trumpId)
-                return card1.getId() > card2.getId();
+    public boolean canBeat(Card card, int trumpId) {
+        if (getSuitId() == trumpId) {
+            if (getSuitId() == trumpId)
+                return getId() > card.getId();
             else
                 return true;
-        } else if (card1.getSuitId() == card2.getSuitId())
-                return card1.getId() > card2.getId();
+        } else if (getSuitId() == card.getSuitId())
+                return getId() > card.getId();
         else
             return false;
     }

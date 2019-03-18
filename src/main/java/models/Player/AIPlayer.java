@@ -1,4 +1,10 @@
-class AIPlayer extends Player {
+package main.java.models.Player;
+
+import main.java.models.CardsList.CardsList;
+import main.java.models.Card.Card;
+import main.java.models.Table.Table;
+
+public class AIPlayer extends Player {
     public AIPlayer(CardsList cardsList, String name){
         super(cardsList, name);
     }
@@ -11,8 +17,11 @@ class AIPlayer extends Player {
             return makeMove(table, mainPlayer, getMinNonTrumpCard(trumpId), trumpId);
         else {
             Card lastMainCard = mainTableCards.get(mainTableCardsLength - 1);
+            for (int i = 0; i < hand.size(); i++)
+                if (makeMove(table, mainPlayer, i, trumpId))
+                    return true;
+            return false;
         }
-        return true;
     }
 
     private int getMinNonTrumpCard(int trumpId) {

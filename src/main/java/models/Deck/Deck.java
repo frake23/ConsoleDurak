@@ -1,6 +1,11 @@
+package main.java.models.Deck;
+
+import main.java.models.Card.Card;
+import main.java.models.CardsList.CardsList;
+
 import java.util.Collections;
 
-class Deck {
+public class Deck {
     private CardsList cardsList = new CardsList();
     public Deck() {
         for (int i = 1; i <= 9; i++)

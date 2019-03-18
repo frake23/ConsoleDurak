@@ -1,6 +1,12 @@
+package main.java.models.Table;
+
+import main.java.models.Card.Card;
+import main.java.models.CardsList.CardsList;
+import main.java.models.Player.Player;
+
 import java.util.HashMap;
 
-class Table {
+public class Table {
     private HashMap<Player, CardsList> cardsOnTable;
 
     public Table(Player mainPlayer, Player aiPlayer) {
