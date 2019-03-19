@@ -46,24 +46,4 @@ public abstract class Player {
     public String getPlayerName() {
         return playerName;
     }
-
-    protected boolean makeMove(Table table, Player opponentPlayer, int cardNum, int trumpId) {
-        CardsList thisTableCards = table.getPlayerCards(this);
-        CardsList opponentTableCards = table.getPlayerCards(opponentPlayer);
-        int thisTableCardsLength = thisTableCards.size();
-        int opponentTableCardsLength = opponentTableCards.size();
-        Card thisCard = hand.get(cardNum);
-        Card opponentCard = opponentTableCardsLength == 0 ? null: opponentTableCards.get(opponentTableCards.size() - 1);
-        int deltaLength = opponentTableCardsLength - thisTableCardsLength;
-        switch (deltaLength) {
-            case 0: table.addCard(this, hand.remove(cardNum));
-                    return true;
-            case 1: if (thisCard.canBeat(opponentCard, trumpId)) {
-                        table.addCard(this, hand.remove(cardNum));
-                        return true;
-                    } else
-                        return false;
-            default: return false;
-        }
-    }
 }

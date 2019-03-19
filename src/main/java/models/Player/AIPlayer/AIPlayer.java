@@ -6,23 +6,22 @@ import main.java.models.Player.Player;
 import main.java.models.Table.Table;
 
 public class AIPlayer extends Player {
-    public AIPlayer(CardsList cardsList, String name){
-        super(cardsList, name);
-    }
+    public AIPlayer(CardsList cardsList, String name){ super(cardsList, name); }
 
     @Override
     public boolean processing(Table table, Player mainPlayer, int trumpId) {
         CardsList mainTableCards = table.getPlayerCards(mainPlayer);
+        CardsList aiTableCards = table.getPlayerCards(this);
         int mainTableCardsLength = mainTableCards.size();
-        if (mainTableCardsLength == 0)
-            return makeMove(table, mainPlayer, getMinNonTrumpCard(trumpId), trumpId);
-        else {
-            Card lastMainCard = mainTableCards.get(mainTableCardsLength - 1);
-            for (int i = 0; i < hand.size(); i++)
-                if (makeMove(table, mainPlayer, i, trumpId))
-                    return true;
-            return false;
-        }
+        int aiTableCardsLength = aiTableCards.size();
+
+        int allTableCardsLength = table.getAllCardsLength();
+
+        if (allTableCardsLength == 0) {
+            table.addCard(this, hand.remove(getMinNonTrumpCard(trumpId)));
+            return true;
+        } else
+            return true;
     }
 
     private int getMinNonTrumpCard(int trumpId) {
