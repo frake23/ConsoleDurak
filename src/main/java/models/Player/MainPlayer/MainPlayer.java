@@ -15,16 +15,23 @@ public class MainPlayer extends Player {
     }
 
     @Override
-    public boolean processing(Table table, Player aiPlayer, int trumpId) {
+    public int processing(Table table, Player aiPlayer, int trumpId) {
         int cardNum = 0;
         if (scan.hasNextInt())
             cardNum = scan.nextInt() - 1;
+        else {
+            String cmd = scan.nextLine();
+            if (cmd.equals("t"))
+                return 1;
+            else if (cmd.equals("b"))
+                return 2;
+        }
         if (cardNum > hand.size() - 1 || cardNum < 0)
-            return false;
+            return 1;
 
         CardsList mainTableCards = table.getPlayerCards(this);
         CardsList aiTableCards = table.getPlayerCards(aiPlayer);
-        int mainTableCardsLength = mainTableCards.size();
+        // int mainTableCardsLength = mainTableCards.size();
         int aiTableCardsLength = aiTableCards.size();
 
         Card mainCard = hand.get(cardNum);
@@ -33,14 +40,14 @@ public class MainPlayer extends Player {
 
         if (allTableCardsLength == 0 || table.existsCard(mainCard)) {
             table.addCard(this, hand.remove(cardNum));
-            return true;
-        } else if (aiTableCardsLength != 0) {
+            return 0;
+        } else if (allTableCardsLength % 2 == 1) {
             Card aiCard = aiTableCards.get(aiTableCardsLength - 1);
             if (mainCard.canBeat(aiCard, trumpId)) {
                 table.addCard(this, hand.remove(cardNum));
-                return true;
+                return 0;
             }
         }
-        return false;
+        return 1;
     }
 }

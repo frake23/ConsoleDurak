@@ -45,7 +45,7 @@ class Game {
 
     private static void deckInit() {
         deck = new Deck();
-        deck.shuffleDeck();
+        deck.shuffle();
     }
 
     private static void tableInit() {
@@ -80,24 +80,51 @@ class Game {
         mainPlayer.cardsPrinting();
         aiPlayer.cardsPrinting();
         System.out.println("--------------Стол---------------");
-        table.tablePrinting();
+        table.print();
         System.out.println("---------------------------------");
     }
 
-    public static void main(String[] args) {
-        init();
-        while (true) {
-            Player secondPlayer = turnPlayer == mainPlayer ? aiPlayer : mainPlayer;
+    private static void takeCards(Player player) {
+        int deckLength = deck.getLength();
+        if (deckLength != 0) {
+            int deltaLength = 6 - player.getHandLength();
+            if (deltaLength > 0) {
+                if (deltaLength > deckLength) {
+                    player.addCards(deck.getCardsList());
+                    deck.clear();
+                } else
+                    player.addCards(deck.takeCards(deltaLength));
+            }
+        }
+    }
 
-            while (true)
-                if (turnPlayer.processing(table, secondPlayer, trumpSuitId))
-                    break;
+    public static void main(String[] args) {
+        int turnResult;
+        init();
+        Player secondPlayer;
+        while (true) {
+            secondPlayer = turnPlayer == mainPlayer ? aiPlayer : mainPlayer;
+            turnResult = turnPlayer.processing(table, secondPlayer, trumpSuitId);
+
+            switch (turnResult) {
+                case 1: turnPlayer.addCards(table.getAllCards());
+                        table.clear();
+                        takeCards(turnPlayer);
+                        takeCards(secondPlayer);
+                        break;
+                case 2: if (table.getAllCardsLength() % 2 == 0) {
+                            table.clear();
+                            takeCards(turnPlayer);
+                            takeCards(secondPlayer);
+                            break;
+                        }
+            }
+
 
             turnPlayer = secondPlayer;
-
             printing();
 
-            if (turnPlayer.cardsLength() == 0){
+            if (turnPlayer.getHandLength() == 0 && table.getAllCardsLength() == 0){
                 System.out.println("Победитель - " + turnPlayer.getPlayerName());
                 break;
             }

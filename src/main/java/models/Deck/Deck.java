@@ -17,7 +17,7 @@ public class Deck {
         return cardsList;
     }
 
-    public void shuffleDeck() {
+    public void shuffle() {
         Collections.shuffle(cardsList);
     }
 
@@ -26,6 +26,14 @@ public class Deck {
         for (int i = 0; i < num; i++)
             takenCardsList.add(cardsList.remove(i));
         return takenCardsList;
+    }
+
+    public int getLength() {
+        return cardsList.size();
+    }
+
+    public void clear() {
+        cardsList.clear();
     }
 
 }

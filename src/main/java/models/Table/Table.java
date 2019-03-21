@@ -22,14 +22,14 @@ public class Table {
         cardsOnTable.get(player).add(card);
     }
 
-    public void tablePrinting() {
+    public void print() {
         for (Player p: cardsOnTable.keySet()) {
             System.out.print(p.getPlayerName() + " ");
             cardsOnTable.get(p).print();
         }
     }
 
-    private CardsList getAllCards() {
+    public CardsList getAllCards() {
         CardsList cards = new CardsList();
         for (Player player: cardsOnTable.keySet())
             cards.addAll(cardsOnTable.get(player));
@@ -47,5 +47,10 @@ public class Table {
     }
     public int getAllCardsLength() {
         return getAllCards().size();
+    }
+
+    public void clear() {
+        for (Player player: cardsOnTable.keySet())
+            cardsOnTable.get(player).clear();
     }
 }

@@ -16,20 +16,16 @@ public abstract class Player {
         hand.addAll(cardsList);
     }
 
-    public CardsList getHand() {
-        return hand;
-    }
-
     public void cardsPrinting() {
         System.out.print(playerName + " ");
         hand.print();
     }
 
-    public int cardsLength() {
+    public int getHandLength() {
         return hand.size();
     }
 
-    public abstract boolean processing(Table table, Player oppositePlayer, int trumpId);
+    public abstract int processing(Table table, Player oppositePlayer, int trumpId);
 
     public Card getMinCard(int trumpSuitId) {
         Card minCard = null;
